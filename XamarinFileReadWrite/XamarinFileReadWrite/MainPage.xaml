@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:XamarinFileReadWrite"
+             x:Class="XamarinFileReadWrite.MainPage">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Entry x:Name="newName" Placeholder="Enter Name" Grid.Row="0"/>
+        <Entry x:Name="newAge" Placeholder="Enter Age" Grid.Row="1"/>
+        <Entry x:Name="newGender" Placeholder="Enter Gender" Grid.Row="2"/>
+        <Button x:Name="btnAdd" Text="ADD" Grid.Row="3" Clicked="btnAdd_Clicked"/>
+        <Button x:Name="btnRefresh" Text="REFRESH" Grid.Row="4" Clicked="btnRefresh_Clicked"/>
+        <ListView x:Name="lstDisplay" Grid.Row="5">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout>
+                            <Label Text="{Binding Name}"/>
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="{Binding Age}"/>
+                                <Label Text="{Binding Gender}"/>
+                            </StackLayout>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+
+</ContentPage>
