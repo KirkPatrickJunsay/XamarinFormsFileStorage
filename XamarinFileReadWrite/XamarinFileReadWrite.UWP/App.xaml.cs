@@ -43,7 +43,7 @@ namespace XamarinFileReadWrite.UWP
 #if DEBUG
             if (System.Diagnostics.Debugger.IsAttached)
             {
-                this.DebugSettings.EnableFrameRateCounter = true;
+                this.DebugSettings.EnableFrameRateCounter = false;
             }
 #endif
 
@@ -59,6 +59,8 @@ namespace XamarinFileReadWrite.UWP
                 rootFrame.NavigationFailed += OnNavigationFailed;
 
                 Xamarin.Forms.Forms.Init(e);
+
+                Xamarin.Forms.DependencyService.Register<FileReadWrite>();
 
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {

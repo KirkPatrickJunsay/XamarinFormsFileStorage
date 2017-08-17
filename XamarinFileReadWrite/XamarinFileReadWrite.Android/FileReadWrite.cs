@@ -11,48 +11,63 @@ using Android.Views;
 using Android.Widget;
 using System.IO;
 using XamarinFileReadWrite.Droid;
+using System.Threading.Tasks;
 
 [assembly:Xamarin.Forms.Dependency(typeof(FileReadWrite))]
 namespace XamarinFileReadWrite.Droid
 {
     public class FileReadWrite : IFileReadWrite
     {
-        public string ReadFromFile()
+        public async Task<string> ReadFromFile()
         {
             string result = string.Empty;
+            TextReader reader = null;
 
             try
             {
                 var documentsPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
-                var filePath = Path.Combine(documentsPath, "ListOfPersons7.json");
+                var filePath = Path.Combine(documentsPath, "PersonList.json");
 
+                reader = new StreamReader(filePath);
+               
                 if (File.Exists(filePath))
-                    result =  System.IO.File.ReadAllText(filePath);
+                    result = await reader.ReadToEndAsync();
             }
             catch(Exception ex)
             {
-                throw new Exception("File Reading Error Occured");
+                throw new Exception("File Reading Error Occured",ex.InnerException);
+            }
+            finally
+            {
+                if (reader != null)
+                    reader.Close();
             }
 
             return result;
         }
 
-        public bool WriteToFile(string text)
+        public async Task<bool> WriteToFile(string text)
         {
             bool result = true;
-
+            TextWriter writer = null;
             try
             {
                 var documentsPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
-                var filePath = Path.Combine(documentsPath, "ListOfPersons7.json");
-                System.IO.File.WriteAllText(filePath, text);
+                var filePath = Path.Combine(documentsPath, "PersonList.json");
+
+                writer = new StreamWriter(filePath);
+                await writer.WriteAsync(text);
 
             }
             catch(Exception ex)
             {
-                throw new Exception("File Writing Error Occured");
+                throw new Exception("File Writing Error Occured",ex.InnerException);
             }
-
+            finally
+            {
+                if (writer != null)
+                    writer.Close();
+            }
             return result;
         }
     }

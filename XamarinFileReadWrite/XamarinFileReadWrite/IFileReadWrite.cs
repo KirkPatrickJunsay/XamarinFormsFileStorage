@@ -8,7 +8,7 @@ namespace XamarinFileReadWrite
 {
     public interface IFileReadWrite
     {
-        bool WriteToFile(string text);
-        string ReadFromFile();
+        Task<bool> WriteToFile(string text);
+        Task<string> ReadFromFile();
     }
 }

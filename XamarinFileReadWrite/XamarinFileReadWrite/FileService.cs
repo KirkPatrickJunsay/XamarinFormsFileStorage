@@ -16,14 +16,14 @@ namespace XamarinFileReadWrite
             fileReadWrite = Xamarin.Forms.DependencyService.Get<IFileReadWrite>();
         }
 
-        public bool WriteToJsonFile(Person param)
+        public async Task<bool> WriteToJsonFile(Person param)
         {
             bool result = true;
 
             try
             {
                 string serialized = JsonConvert.SerializeObject(param);
-                fileReadWrite.WriteToFile(serialized);
+                await fileReadWrite.WriteToFile(serialized);
             }
             catch(Exception ex)
             {
@@ -33,13 +33,13 @@ namespace XamarinFileReadWrite
             return result;
         }
 
-        public Person ReadFromJsonFile()
+        public async Task<Person> ReadFromJsonFile()
         {
             Person deserialized = new Person();
 
             try
             {
-                deserialized = JsonConvert.DeserializeObject<Person>(fileReadWrite.ReadFromFile());
+                deserialized = JsonConvert.DeserializeObject<Person>(await fileReadWrite.ReadFromFile());
 
                 if (deserialized == null)
                     deserialized = new Person();

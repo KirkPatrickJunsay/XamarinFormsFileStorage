@@ -16,12 +16,12 @@ namespace XamarinFileReadWrite
             InitializeComponent();
         }
 
-        private void btnAdd_Clicked(object sender, EventArgs e)
+        private async void btnAdd_Clicked(object sender, EventArgs e)
         {
             bool result = true;
             Person temp = new Person();
 
-            temp = App.FileHandler.ReadFromJsonFile();
+            temp = await App.FileHandler.ReadFromJsonFile();
 
             temp.PersonDetail.Add(new PersonDetails()
             {
@@ -30,21 +30,21 @@ namespace XamarinFileReadWrite
                 Gender = newGender.Text
             });
 
-            result = App.FileHandler.WriteToJsonFile(temp);
+            result = await App.FileHandler.WriteToJsonFile(temp);
 
             if (result == true)
-                DisplayAlert("Information", "Successfully Added Person", "OK");
+                await DisplayAlert("Information", "Successfully Added Person", "OK");
             else
-                DisplayAlert("Error", "Error in Adding Person", "OK");
+                await DisplayAlert("Error", "Error in Adding Person", "OK");
         }
 
-        private void btnRefresh_Clicked(object sender, EventArgs e)
+        private async void btnRefresh_Clicked(object sender, EventArgs e)
         {
             Person temp = new Person();
-            temp = App.FileHandler.ReadFromJsonFile();
+            temp = await App.FileHandler.ReadFromJsonFile();
             if (temp.PersonDetail.Count == 0)
             {
-                DisplayAlert("Information", "No Record to be shown", "OK");
+                await DisplayAlert("Information", "No Record to be shown", "OK");
             }
             else
             {
